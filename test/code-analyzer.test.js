@@ -80,3 +80,75 @@ describe('The javascript parser', () => {
             '        return z;\n' +
             '    }\n' +
             '}\n');});});
+describe('The javascript parser', () => {
+    it('is parsing no function', () => {
+        assert.equal((parseCode('let a = [1,2,3];','')), '\n');});});
+
+describe('The javascript parser', () => {
+    it('is parsing no conditions', () => {
+        assert.equal((parseCode('function f(x){\n' +
+            'return x;\n' +
+            '}','1')), 'function f(x) {\n' +
+            '    return x;\n' +
+            '}\n');});});
+
+describe('The javascript parser', () => {
+    it('is parsing no function', () => {
+        assert.equal((parseCode('function f(x){\n' +
+            'x=2;\n' +
+            'return x;\n' +
+            '}','1')), 'function f(x) {\n' +
+            '    x = 2;\n' +
+            '    return x;\n' +
+            '}\n');});});
+describe('The javascript parser', () => {
+    it('is parsing with function, predicat = false', () => {
+        assert.equal((parseCode('function f(x,y,z){\n' +
+            'x=2;\n' +
+            'if(x==1){\n' +
+            ' x=3;\n' +
+            '}\n' +
+            'return x;\n' +
+            '}','1,2,3')), 'function f(x, y, z) {\n' +
+            '    x = 2;\n' +
+            '<redBack>    if (x == 1) {</redBack>\n' +
+            '        x = 3;\n' +
+            '    }\n' +
+            '    return x;\n' +
+            '}\n');});});
+describe('The javascript parser', () => {
+    it('is parsing no function', () => {
+        assert.equal((parseCode('function f(x,y,z){\n' +
+            'x=2;\n' +
+            'if(x==2){\n' +
+            ' x=3;\n' +
+            '}\n' +
+            'return x;\n' +
+            '}','1,2,3')), 'function f(x, y, z) {\n' +
+            '    x = 2;\n' +
+            '<greenBack>    if (x == 2) {</greenBack>\n' +
+            '        x = 3;\n' +
+            '    }\n' +
+            '    return x;\n' +
+            '}\n');});});
+describe('The javascript parser', () => {
+    it('is parsing no function', () => {
+        assert.equal((parseCode('function f(x,y,z){\n' +
+            'x=2;\n' +
+            'if(x==1){\n' +
+            ' x=3;\n' +
+            '}\n' +
+            'if(y==31){\n' +
+            'y=3;\n' +
+            '}\n' +
+            'return x;\n' +
+            '}','1,2,3')), 'function f(x, y, z) {\n' +
+            '    x = 2;\n' +
+            '<redBack>    if (x == 1) {</redBack>\n' +
+            '        x = 3;\n' +
+            '    }\n' +
+            '<redBack>    if (y == 31) {</redBack>\n' +
+            '        y = 3;\n' +
+            '    }\n' +
+            '    return x;\n' +
+            '}\n');});});
